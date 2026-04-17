@@ -30,8 +30,8 @@ def check_in_game() -> bool:
         try:
             page.goto(OPGG_URL, wait_until="domcontentloaded", timeout=30000)
             page.wait_for_timeout(5000)
-            content = page.text_content("body") or ""
-            return "is not in an active game" not in content
+            # 게임 중이면 Blue Team / Red Team 요소가 존재
+            return page.locator("text=Blue Team").count() > 0
         finally:
             browser.close()
 
